@@ -7,7 +7,11 @@ from typing import Dict, Any
 
 logger = logging.getLogger("simplehtr.usage")
 
-USAGE_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "vision_usage.json"
+# Support Vercel serverless writable /tmp directory
+if os.environ.get("VERCEL"):
+    USAGE_FILE = Path("/tmp/data/vision_usage.json")
+else:
+    USAGE_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "vision_usage.json"
 DEFAULT_LIMIT = int(os.getenv("MONTHLY_USAGE_LIMIT", "900"))
 
 

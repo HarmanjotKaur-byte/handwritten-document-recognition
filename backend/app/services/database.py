@@ -9,7 +9,12 @@ import binascii
 from pathlib import Path
 from typing import Optional
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
+# Support Vercel serverless writable /tmp directory
+if os.environ.get("VERCEL"):
+    DATA_DIR = Path("/tmp/data")
+else:
+    DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
+
 DB_PATH = DATA_DIR / "app_database.sqlite"
 
 
