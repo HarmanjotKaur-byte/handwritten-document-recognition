@@ -1,0 +1,74 @@
+[
+  {
+    "id": "sample_01_repo_word",
+    "file": "local_word.png",
+    "ground_truth": "word",
+    "category": "single_word_clean"
+  },
+  {
+    "id": "sample_02_repo_line",
+    "file": "local_line.png",
+    "ground_truth": "or work on line level",
+    "category": "text_line_clean"
+  },
+  {
+    "id": "sample_03_iam_line_0",
+    "file": "iam_line_0.png",
+    "ground_truth": "assuredness \" Bella Bella Marie \" ( Parlophone ) , a lively song that changes tempo mid-way .",
+    "category": "long_line_quotes_parens"
+  },
+  {
+    "id": "sample_04_iam_line_1",
+    "file": "iam_line_1.png",
+    "ground_truth": "I don't think he will storm the charts with this one , but it 's a good start .",
+    "category": "medium_line_apostrophes"
+  },
+  {
+    "id": "sample_05_iam_line_2",
+    "file": "iam_line_2.png",
+    "ground_truth": "CHRIS CHARLES , 39 , who lives in Stockton-on-Tees , is an accountant .",
+    "category": "uppercase_and_digits"
+  },
+  {
+    "id": "sample_06_iam_line_3",
+    "file": "iam_line_3.png",
+    "ground_truth": "Become a success with a disc and hey presto ! You 're a star ... . Rolly sings with",
+    "category": "exclamations_dots"
+  },
+  {
+    "id": "sample_07_iam_line_4",
+    "file": "iam_line_4.png",
+    "ground_truth": "Tolch , as he is known in Tin Pan Alley , likes songs with a month in the title . He wrote",
+    "category": "standard_cursive_handwriting"
+  },
+  {
+    "id": "sample_08_iam_line_5",
+    "file": "iam_line_5.png",
+    "ground_truth": "\" My September Love , \" the big David Whitfield hit of 1956 .",
+    "category": "dates_quotes"
+  },
+  {
+    "id": "sample_09_iam_line_8",
+    "file": "iam_line_8.png",
+    "ground_truth": "The numbers include \" Scotland the Brave , \" \" Men of Harlech , \"",
+    "category": "proper_nouns"
+  },
+  {
+    "id": "sample_10_iam_line_11",
+    "file": "iam_line_11.png",
+    "ground_truth": "round a doll's house .",
+    "category": "short_line_slanted"
+  },
+  {
+    "id": "sample_11_iam_line_13",
+    "file": "iam_line_13.png",
+    "ground_truth": "( B B C , 10.15 ) .",
+    "category": "abbreviations_time_punctuation"
+  },
+  {
+    "id": "sample_12_iam_line_14",
+    "file": "iam_line_14.png",
+    "ground_truth": "\" McNamara's Band , \" \" Greensleeves \" and \" English Rose . \"",
+    "category": "complex_capitalization"
+  }
+]

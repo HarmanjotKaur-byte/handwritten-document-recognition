@@ -1,0 +1,52 @@
+[
+  {
+    "id": "doc_1795335056367",
+    "name": "Handwritten Document",
+    "created_at": "2026-11-22T13:40:56.366632",
+    "updated_at": "2026-11-22T13:40:56.366632",
+    "category": "Other / Unknown",
+    "category_confidence": 0.15,
+    "category_is_confirmed": false,
+    "category_reason": "No strong document-specific keyword patterns detected.",
+    "tags": [
+      "other / unknown"
+    ],
+    "is_favorite": false,
+    "original_ocr_text": "May the saddest day of your future be no\nworse than the happiest day of your past.\nAnd may the most you wish for be the least\nthat you get.\n- Irish blessing",
+    "improved_text": "May the saddest day of your future be no\nworse than the happiest day of your past.\nAnd may the most you wish for be the least\nthat you get.\n- Irish blessing",
+    "improvement_history": [],
+    "user_edits": [],
+    "summary": null,
+    "key_points": null,
+    "metadata": {
+      "provider": "Google Gemini Vision (gemini-3.5-flash-lite)",
+      "processing_time_ms": 2403.54,
+      "image_dimensions": null
+    }
+  },
+  {
+    "id": "doc_1795335441176",
+    "name": "Handwritten Document",
+    "created_at": "2026-11-22T13:47:21.176036",
+    "updated_at": "2026-11-22T13:47:21.176036",
+    "category": "Quote / Blessing / Poetry",
+    "category_confidence": 1.0,
+    "category_is_confirmed": false,
+    "category_reason": "The text explicitly contains an Irish blessing offering well wishes.",
+    "tags": [
+      "quote / blessing / poetry"
+    ],
+    "is_favorite": false,
+    "original_ocr_text": "May the saddest day of your future be no\nworse than the happiest day of your past.\nAnd may the most you wish for be the least\nthat you get.\n- Irish blessing",
+    "improved_text": "May the saddest day of your future be no\nworse than the happiest day of your past.\nAnd may the most you wish for be the least\nthat you get.\n- Irish blessing",
+    "improvement_history": [],
+    "user_edits": [],
+    "summary": null,
+    "key_points": null,
+    "metadata": {
+      "provider": "Google Gemini Vision (gemini-3.5-flash-lite)",
+      "processing_time_ms": 8163.88,
+      "image_dimensions": null
+    }
+  }
+]

@@ -1,0 +1,16 @@
+id,file,category,ground_truth,prediction,latency_ms,cer,wer,exact_match,status
+sample_01_repo_word,local_word.png,single_word_clean,word,word,3128.7,0.0,0.0,1.0,SUCCESS
+sample_02_repo_line,local_line.png,text_line_clean,or work on line level,or work on line level,1748.86,0.0,0.0,1.0,SUCCESS
+sample_03_iam_line_0,iam_line_0.png,long_line_quotes_parens,"assuredness "" Bella Bella Marie "" ( Parlophone ) , a lively song that changes tempo mid-way .","assuredness ""Bella Bella Marie"" (Parlophone), a lively song that changes tempo mid-way.",2369.92,0.0645,0.5556,0.0,SUCCESS
+sample_04_iam_line_1,iam_line_1.png,medium_line_apostrophes,"I don't think he will storm the charts with this one , but it 's a good start .","I don't think he will storm the charts with this one, but it's a good start.",2594.11,0.038,0.3158,0.0,SUCCESS
+sample_05_iam_line_2,iam_line_2.png,uppercase_and_digits,"CHRIS CHARLES , 39 , who lives in Stockton-on-Tees , is an accountant .","CHRIS CHARLES, 39, who lives in Stockton-on-Tees, is an accountant.",2090.27,0.0563,0.5714,0.0,SUCCESS
+sample_06_iam_line_3,iam_line_3.png,exclamations_dots,Become a success with a disc and hey presto ! You 're a star ... . Rolly sings with,Become a success with a disc and hey presto! You're a star... Rolly sings with,2760.51,0.0602,0.3684,0.0,SUCCESS
+sample_07_iam_line_4,iam_line_4.png,standard_cursive_handwriting,"Tolch , as he is known in Tin Pan Alley , likes songs with a month in the title . He wrote","Tolch, as he is unown in Tin Pan Alley, lives songs with a month in the title. He wrote",2195.04,0.0556,0.3636,0.0,SUCCESS
+sample_08_iam_line_5,iam_line_5.png,dates_quotes,""" My September Love , "" the big David Whitfield hit of 1956 .","""My September love"", the big David Whitfield hit of 1956.",4334.44,0.082,0.5,0.0,SUCCESS
+sample_09_iam_line_8,iam_line_8.png,proper_nouns,"The numbers include "" Scotland the Brave , "" "" Men of Harlech , ""","The numbers include ""Scotland the Brave,"" ""Men of Harlech,""",7053.62,0.0923,0.6667,0.0,SUCCESS
+sample_10_iam_line_11,iam_line_11.png,short_line_slanted,round a doll's house .,round a doll's house.,2639.04,0.0455,0.4,0.0,SUCCESS
+sample_11_iam_line_13,iam_line_13.png,abbreviations_time_punctuation,"( B B C , 10.15 ) .","(CBBE, 10.15).",5810.0,0.3684,1.0,0.0,SUCCESS
+sample_12_iam_line_14,iam_line_14.png,complex_capitalization,""" McNamara's Band , "" "" Greensleeves "" and "" English Rose . ""","""Mc Namara's band,"" ""Greensleeves"" and ""English Rose.""",2076.99,0.1475,0.9286,0.0,SUCCESS
+user_rabbit,crop_rabbit.png,user_green_highlighter,rabbit,rabbit,5500.28,0.0,0.0,1.0,SUCCESS
+user_red,crop_red.png,user_red_ink,red,red,1946.13,0.0,0.0,1.0,SUCCESS
+user_multi,exact_multi.png,user_table_strip,father method all does color,father method all does colo,1066.7,0.0357,0.2,0.0,SUCCESS

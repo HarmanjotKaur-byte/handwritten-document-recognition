@@ -1,0 +1,8 @@
+Metric,Value
+Total Samples,12
+Exact Matches,2
+Exact Match Accuracy (%),16.67
+Global CER (%),16.59
+Global WER (%),46.75
+Average Latency (ms),66.12
+Failed / Empty Predictions,0
