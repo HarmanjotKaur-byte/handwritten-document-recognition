@@ -41,7 +41,7 @@ export default function UploadPanel({ onImageSelected, samples = [], onSelectSam
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp"
+          accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp,application/pdf,.pdf"
           onChange={handleFileChange}
           className="hidden"
         />
@@ -58,7 +58,7 @@ export default function UploadPanel({ onImageSelected, samples = [], onSelectSam
         </p>
 
         <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-400">
-          <span>Supports PNG, JPG, JPEG, BMP</span>
+          <span>Supports PNG, JPG, JPEG, BMP & PDF</span>
           <span>•</span>
           <span>Max 10 MB</span>
         </div>

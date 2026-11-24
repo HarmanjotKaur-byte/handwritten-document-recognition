@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional
 from PIL import Image
 from pathlib import Path
 from google import genai
+from google.genai import types
 
 from app.services.usage_service import UsageService
 from app.services.preprocessing_service import PreprocessingService
@@ -17,7 +18,7 @@ logger = logging.getLogger("simplehtr.vision")
 class VisionService:
     """
     Main handwriting recognition service powered by Google Gemini Flash Vision.
-    Performs multimodal OCR, tracks usage limits, and normalizes outputs.
+    Performs multimodal OCR for images and short/long multi-page PDFs, tracks usage limits, and normalizes outputs.
     """
     _instance = None
 
@@ -60,9 +61,10 @@ class VisionService:
     def is_configured(self) -> bool:
         return self.client is not None
 
-    async def recognize(self, image_bytes: bytes) -> Dict[str, Any]:
+    async def recognize(self, file_bytes: bytes, filename: str = "") -> Dict[str, Any]:
         """
-        Asynchronously runs handwriting recognition with thread pool execution.
+        Asynchronously runs handwriting recognition on uploaded images or PDFs.
+        Supports single-page and multi-page PDF documents.
         """
         if not self.is_configured():
             raise RuntimeError("Vision API is not configured. GEMINI_API_KEY is missing.")
@@ -74,30 +76,43 @@ class VisionService:
                 "Further requests rejected to prevent quota overages."
             )
 
-        # 1. Image validation & EXIF orientation normalization
-        pil_img, w, h = PreprocessingService.validate_and_load(image_bytes)
-
-        # 2. Asynchronous execution in threadpool to prevent blocking the event loop
-        loop = asyncio.get_event_loop()
-        t0 = time.perf_counter()
-
-        def _call_api():
+        is_pdf = filename.lower().endswith(".pdf") or file_bytes.startswith(b"%PDF")
+        
+        if is_pdf:
+            w, h = 800, 1100
+            content_part = types.Part.from_bytes(data=file_bytes, mime_type="application/pdf")
+            prompt = (
+                "Transcribe all handwritten and printed text in this PDF document accurately and completely from top to bottom. "
+                "If the document has multiple pages, transcribe each page in order. "
+                "Preserve word order and line breaks where appropriate. "
+                "Return ONLY the transcribed text, nothing else."
+            )
+        else:
+            # Image validation & EXIF orientation normalization
+            pil_img, w, h = PreprocessingService.validate_and_load(file_bytes)
+            content_part = pil_img
             prompt = (
                 "Transcribe all handwritten text in this image accurately and completely from top to bottom. "
                 "Preserve word order and line breaks where appropriate. "
                 "Return ONLY the transcribed text, nothing else."
             )
+
+        # Asynchronous execution in threadpool to prevent blocking the event loop
+        loop = asyncio.get_event_loop()
+        t0 = time.perf_counter()
+
+        def _call_api():
             response = self.client.models.generate_content(
                 model=self.model_name,
-                contents=[prompt, pil_img]
+                contents=[prompt, content_part]
             )
             return response.text if response and response.text else ""
 
         try:
-            # 15s timeout
-            raw_text = await asyncio.wait_for(loop.run_in_executor(None, _call_api), timeout=15.0)
+            # 30s timeout for multi-page documents
+            raw_text = await asyncio.wait_for(loop.run_in_executor(None, _call_api), timeout=30.0)
         except asyncio.TimeoutError:
-            raise TimeoutError("Vision API request timed out after 15 seconds.")
+            raise TimeoutError("Vision API request timed out after 30 seconds.")
         except Exception as e:
             logger.error(f"Vision API error during inference: {e}")
             raise RuntimeError(f"Vision API error: {str(e)}")
@@ -107,7 +122,7 @@ class VisionService:
         # Record consumed unit
         self.usage_service.record_usage(1)
 
-        # 3. Structure and normalize output
+        # Structure and normalize output
         return ResultService.structure_recognition_output(
             raw_text=raw_text,
             processing_time_ms=latency_ms,

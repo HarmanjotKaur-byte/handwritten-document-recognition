@@ -35,10 +35,18 @@ export default function ImageAdjustmentPanel({
       return;
     }
 
-    // Validate type
-    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/bmp', 'image/webp'];
-    if (!validTypes.includes(file.type)) {
-      setValidationError('Unsupported format. Please upload PNG, JPG, JPEG or BMP.');
+    // Validate type (Images + Short/Long PDFs)
+    const validTypes = [
+      'image/png', 
+      'image/jpeg', 
+      'image/jpg', 
+      'image/bmp', 
+      'image/webp',
+      'application/pdf'
+    ];
+    const isPdfByName = file.name.toLowerCase().endsWith('.pdf');
+    if (!validTypes.includes(file.type) && !isPdfByName) {
+      setValidationError('Unsupported format. Please upload PNG, JPG, JPEG, BMP, WebP or PDF.');
       return;
     }
 
@@ -124,7 +132,7 @@ export default function ImageAdjustmentPanel({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp"
+            accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp,application/pdf,.pdf"
             onChange={handleFileChange}
             className="hidden"
           />
@@ -148,12 +156,12 @@ export default function ImageAdjustmentPanel({
 
           {/* Formats pill row */}
           <div className="flex items-center justify-center gap-2 mt-5 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+            <span className="px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-bold">PDF (Multi-page)</span>
             <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">PNG</span>
             <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Images</span>
             <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">JPG</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">WebP</span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-2">Maximum file size: 10MB per file</p>
+          <p className="text-[10px] text-slate-400 mt-2">Maximum file size: 10MB • Supports Short & Long Multi-Page PDFs</p>
 
           {validationError && (
             <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 text-rose-700 text-xs font-medium border border-rose-200">
@@ -205,27 +213,41 @@ export default function ImageAdjustmentPanel({
           </div>
 
           {/* Interactive Preview Canvas */}
-          <div className="p-6 bg-slate-100 flex items-center justify-center min-h-[160px] overflow-hidden">
-            <img
-              src={previewUrl}
-              alt="Preview"
-              style={{ transform: `rotate(${rotationAngle}deg)` }}
-              className="max-h-40 max-w-full object-contain rounded-md shadow-xs transition-transform duration-200"
-            />
+          <div className="p-6 bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center min-h-[160px] overflow-hidden">
+            {selectedFile?.name?.toLowerCase().endsWith('.pdf') ? (
+              <div className="flex flex-col items-center justify-center p-6 text-center">
+                <div className="h-14 w-14 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-2 shadow-xs">
+                  <FileCheck2 className="h-8 w-8" />
+                </div>
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  {selectedFile.name}
+                </span>
+                <span className="text-[11px] text-purple-600 dark:text-purple-400 font-semibold mt-1">
+                  Multi-Page PDF Ready for Transcription
+                </span>
+              </div>
+            ) : (
+              <img
+                src={previewUrl}
+                alt="Preview"
+                style={{ transform: `rotate(${rotationAngle}deg)` }}
+                className="max-h-40 max-w-full object-contain rounded-md shadow-xs transition-transform duration-200"
+              />
+            )}
           </div>
 
           {/* Action Row */}
-          <div className="p-4 bg-white border-t border-slate-200 flex items-center justify-between">
+          <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium"
+              className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white font-medium cursor-pointer"
             >
-              Replace Image
+              Replace Document
             </button>
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp"
+              accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp,application/pdf,.pdf"
               onChange={handleFileChange}
               className="hidden"
             />

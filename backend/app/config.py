@@ -19,7 +19,7 @@ DEFAULT_IMG_WIDTH = 128
 LINE_IMG_WIDTH = 256
 PADDING = 16
 MAX_IMAGE_SIZE_MB = 10
-ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".webp", ".tiff"}
+ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".webp", ".tiff", ".pdf"}
 
 # Server Config
 HOST = os.getenv("HOST", "0.0.0.0")

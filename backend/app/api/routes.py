@@ -73,17 +73,18 @@ async def get_model_info():
     return ModelInfoResponse(
         provider="Google DeepMind / Google AI Studio",
         model_name=vision_service.model_name,
-        recognition_method="Multimodal Neural Vision Transformer (Document Text & Handwritten)",
-        supported_image_formats=["PNG", "JPG", "JPEG", "WEBP"],
-        supported_input_types=["Photo Upload", "Canvas Whiteboard Drawing", "Document Page Scans"],
+        recognition_method="Multimodal Neural Vision Transformer (Document Text, Handwritten & PDF)",
+        supported_image_formats=["PNG", "JPG", "JPEG", "WEBP", "BMP", "PDF"],
+        supported_input_types=["Photo Upload", "Canvas Whiteboard Drawing", "Document Page Scans", "Short & Long Multi-Page PDFs"],
         capabilities=[
             "Single-word handwriting recognition",
             "Multi-word text line recognition",
             "Full page and paragraph transcription",
+            "Multi-page PDF document processing",
             "Highlighter and colored ink resilience",
             "Table and ruled line insensitivity"
         ],
-        description="High-performance multimodal handwriting recognition model capable of transcribing cursive, print, and mixed handwriting across various media without heuristic stroke distortion."
+        description="High-performance multimodal handwriting recognition model capable of transcribing cursive, print, and mixed handwriting across various media and multi-page PDFs without heuristic stroke distortion."
     )
 
 
@@ -116,10 +117,11 @@ async def predict_image(file: UploadFile = File(...)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No file uploaded.")
 
     ext = Path(file.filename).suffix.lower()
-    if ext not in [".png", ".jpg", ".jpeg", ".webp"]:
+    allowed_extensions = [".png", ".jpg", ".jpeg", ".webp", ".bmp", ".pdf"]
+    if ext not in allowed_extensions:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Unsupported file format '{ext}'. Allowed: .png, .jpg, .jpeg, .webp"
+            detail=f"Unsupported file format '{ext}'. Allowed: .png, .jpg, .jpeg, .webp, .bmp, .pdf"
         )
 
     try:
@@ -129,7 +131,7 @@ async def predict_image(file: UploadFile = File(...)):
 
     vision_service = VisionService.get_instance()
     try:
-        result = await vision_service.recognize(content)
+        result = await vision_service.recognize(content, filename=file.filename)
         return PredictionResponse(**result)
     except ValueError as ve:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(ve))
