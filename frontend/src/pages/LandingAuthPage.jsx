@@ -52,6 +52,17 @@ export default function LandingAuthPage({ onLoginSuccess, onShowToast }) {
     }
   };
 
+  const handleTestUserLogin = () => {
+    const guestUser = {
+      id: "usr_guest_demo",
+      name: "Guest Teacher / Evaluator",
+      email: "evaluator@test.local",
+      created_at: new Date().toISOString()
+    };
+    onLoginSuccess(guestUser);
+    if (onShowToast) onShowToast("Logged in as Demo / Test User! You can now test the dashboard directly.", "success");
+  };
+
   const steps = [
     {
       step: "01",
@@ -115,6 +126,13 @@ export default function LandingAuthPage({ onLoginSuccess, onShowToast }) {
               ) : (
                 <Moon className="h-4 w-4 text-purple-700" />
               )}
+            </button>
+
+            <button
+              onClick={handleTestUserLogin}
+              className="px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/60 hover:bg-purple-100 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 transition-all font-bold cursor-pointer"
+            >
+              Demo / Test User
             </button>
 
             <button
@@ -313,6 +331,15 @@ export default function LandingAuthPage({ onLoginSuccess, onShowToast }) {
               className="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-md shadow-purple-500/25 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               {loading ? 'Please wait...' : authMode === 'signup' ? 'Create Account' : 'Sign In to Dashboard'}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleTestUserLogin}
+              className="w-full py-2.5 rounded-2xl bg-purple-50 dark:bg-purple-950/60 hover:bg-purple-100 dark:hover:bg-purple-900/60 border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 font-bold text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              <User className="h-3.5 w-3.5" />
+              <span>Instant Test / Demo Access</span>
             </button>
           </form>
 
