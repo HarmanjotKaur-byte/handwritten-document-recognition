@@ -33,13 +33,42 @@ export default function ExportMenu({ docName, originalText, improvedText }) {
     try {
       await exportDocumentFile({
         docName: docName || 'document',
-        originalText,
-        improvedText,
+        originalText: originalText || '',
+        improvedText: improvedText || originalText || '',
         version,
         format
       });
     } catch (e) {
-      alert(`Export failed: ${e.message}`);
+      console.warn('Backend export failed, falling back to instant client-side download:', e);
+      // Fallback: download instantly via client-side blob if network or serverless function is unreachable
+      try {
+        const textToSave = getTargetText();
+        let mime = 'text/plain;charset=utf-8';
+        let content = textToSave;
+        
+        if (format === 'json') {
+          mime = 'application/json;charset=utf-8';
+          content = JSON.stringify({
+            name: docName || 'document',
+            original_ocr_text: originalText || '',
+            improved_text: improvedText || '',
+            exported_text: textToSave,
+            version
+          }, null, 2);
+        }
+
+        const blob = new Blob([content], { type: mime });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `${docName || 'document'}_${version}.${format === 'docx' ? 'txt' : (format === 'pdf' ? 'txt' : format)}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      } catch (fallbackErr) {
+        alert(`Export failed: ${e.message}`);
+      }
     } finally {
       setDownloading(null);
       setIsOpen(false);

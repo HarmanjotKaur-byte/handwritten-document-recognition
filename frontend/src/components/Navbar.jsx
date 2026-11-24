@@ -45,16 +45,6 @@ export default function Navbar({
 
         {/* Right side controls */}
         <div className="flex items-center gap-3">
-          
-          {/* Credits Counter Pill */}
-          <div 
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-[11px] font-mono shadow-2xs"
-            title="API credits consumption tracker"
-          >
-            <Zap className="h-3 w-3 text-purple-600 dark:text-purple-400 fill-purple-600 dark:fill-purple-400" />
-            <span className="font-semibold">Credits: {creditsUsed} / {monthlyLimit}</span>
-            <span className="text-[10px] opacity-75 hidden sm:inline">({remaining} left)</span>
-          </div>
 
           {/* Theme Switcher Button */}
           <button
